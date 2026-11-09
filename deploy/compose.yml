@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: ..
+    restart: unless-stopped
+    environment:
+      PUBLIC_ORIGIN: https://${WATCHOUT_DOMAIN:?Set WATCHOUT_DOMAIN}
+      SYNC_SOURCES: ${SYNC_SOURCES:-false}
+      NSW_CAMERA_RIGHTS_CONFIRMED: ${NSW_CAMERA_RIGHTS_CONFIRMED:-false}
+      TFNSW_API_KEY: ${TFNSW_API_KEY:-}
+      PROVIDER_USER_AGENT: ${PROVIDER_USER_AGENT:-Watchout/0.1 self-hosted}
+    volumes:
+      - watchout-data:/data
+    networks: [watchout]
+  gateway:
+    image: caddy:2.10.2
+    restart: unless-stopped
+    ports: ['80:80', '443:443', '443:443/udp']
+    environment:
+      WATCHOUT_DOMAIN: ${WATCHOUT_DOMAIN:?Set WATCHOUT_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks: [watchout]
+    depends_on:
+      api:
+        condition: service_healthy
+networks:
+  watchout:
+volumes:
+  watchout-data:
+  caddy-data:
+  caddy-config:

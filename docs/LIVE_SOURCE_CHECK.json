@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-11-09T10:24:12.159Z",
+  "region": "Sydney / NSW",
+  "tests": [
+    {
+      "source": "cameras",
+      "status": "blocked",
+      "ok": false,
+      "error": "Source request or schema validation failed"
+    },
+    {
+      "source": "traffic",
+      "status": "blocked",
+      "ok": false,
+      "error": "TFNSW_API_KEY not configured"
+    },
+    {
+      "source": "Sydney address search",
+      "status": "blocked",
+      "httpStatus": 503,
+      "error": "Address search is unavailable. Check the geocoding provider or enter coordinates."
+    },
+    {
+      "source": "Sydney road route",
+      "status": "blocked",
+      "httpStatus": 503,
+      "error": "Road routing is unavailable. Your waypoints are preserved; retry when the provider is available."
+    }
+  ]
+}

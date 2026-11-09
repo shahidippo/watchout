@@ -1,0 +1,42 @@
+{
+  "name": "watchout",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.10"
+  },
+  "scripts": {
+    "dev": "node --use-env-proxy --env-file-if-exists=.env server/index.mjs",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --test server/test/*.test.mjs",
+    "android:sync": "npm run build && cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug",
+    "check:live": "node --use-env-proxy --env-file-if-exists=.env scripts/check-live.mjs",
+    "test:ui": "npm run build && playwright test"
+  },
+  "dependencies": {
+    "@capacitor/android": "7.6.9",
+    "@capacitor/core": "7.6.9",
+    "@fastify/cors": "11.4.1",
+    "@fastify/helmet": "13.2.0",
+    "@fastify/rate-limit": "11.2.2",
+    "@fastify/static": "10.1.10",
+    "fastify": "5.12.8",
+    "leaflet": "1.9.4",
+    "lucide-react": "0.468.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "7.6.9",
+    "@playwright/test": "1.56.1",
+    "@types/leaflet": "1.9.21",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9",
+    "@vitejs/plugin-react": "5.0.4",
+    "typescript": "5.9.3",
+    "vite": "7.3.7"
+  }
+}
